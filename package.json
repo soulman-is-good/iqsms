@@ -1,0 +1,29 @@
+{
+  "name": "iqsms",
+  "version": "1.0.0",
+  "description": "iqsms.ru JSON API implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soulman-is-good/iqsms.git"
+  },
+  "keywords": [
+    "sms",
+    "service",
+    "iqsms",
+    "sms"
+  ],
+  "author": "Maxim Savin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soulman-is-good/iqsms/issues"
+  },
+  "homepage": "https://github.com/soulman-is-good/iqsms#readme",
+  "dependencies": {
+    "node-defer": "^1.0.1",
+    "request": "^2.58.0"
+  }
+}
