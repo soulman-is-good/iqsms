@@ -5,7 +5,6 @@ This package is implementation for service http://iqsms.ru/api/api_about
 
 # TODO
 
-* Sending bulk sms with sms queue name
 * API documentation
 * Tests
 

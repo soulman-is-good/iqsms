@@ -14,6 +14,7 @@ var iqsms = function(api_login, api_password) {
 	var	password;
 	var request;
 	var server_url = 'http://json.gate.iqsms.ru';
+
 	function handleCallback(promise, callback) {
 		return function(err, res, data){
 			if(err) {
@@ -28,7 +29,12 @@ var iqsms = function(api_login, api_password) {
 	
 	//public:
 	/**
-	 * Sends sms
+	 * Sends smses.
+	 * 
+	 * @param {Message} message pass an array of json|Message to make a bulk send
+	 * @param {String} scheduleTime pass to set time of sending in UTC format
+	 * @param {function} callback can be passed as a secod funciton argument if sceduleTime is not needed
+	 * @return promise
 	 */
 	this.send = function(message, scheduleTime, callback){
 		var promise = new Deferred();
@@ -36,17 +42,27 @@ var iqsms = function(api_login, api_password) {
 			login: login,
 			password: password
 		};
-		if(!(message instanceof Message)) {
-			message = new Message(message);
+		if(Array.isArray(message)) {
+			body.messages = message.map(function(item){
+				if(item instanceof Message) {
+					item = item.toJSON();
+				}
+				return item;
+			});
+		} else {
+			if(!(message instanceof Message)) {
+				message = new Message(message);
+			}
+			body.messages = [message.toJSON()];
 		}
 		if('function' === typeof scheduleTime) {
 			callback = scheduleTime;
 			scheduleTime = null;
 		}
 		if(scheduleTime) {
+			//todo: convert to UTC like 2009-01-01T12:30:01+00:00
 			body.scheduleTime = String(scheduleTime);
 		}
-		body.messages = [message.toJSON()];
 		callback = callback || function(){};
 		request({
 			uri: "/send/",
